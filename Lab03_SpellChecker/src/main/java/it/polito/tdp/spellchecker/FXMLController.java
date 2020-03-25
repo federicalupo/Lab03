@@ -49,27 +49,40 @@ public class FXMLController {
 
 	@FXML
 	void doClearText(ActionEvent event) {
+		txtInserisci.clear();
+		txtErrori.clear();
+		this.txtContaErrori.setText("");
+		this.txtTempo.setText("");
+		
 
 	}
 
 	@FXML
 	void doSpellCheck(ActionEvent event) {
 		model.loadDictionary(bxSeleziona.getValue());
+		this.txtErrori.clear();
+		this.txtContaErrori.setText(""); //cosi se non viene inserito il testo, non ho gli errori del testo prima
+		this.txtTempo.setText("");
 		
-		
-		String inputTesto = txtInserisci.getText().toLowerCase().replaceAll("[.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]", "");
+		String inputTesto = txtInserisci.getText().toLowerCase().replaceAll("[?.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]",""); // aggiungo ?
+		if (inputTesto.length() > 0) //evitare righe vuote
 
-		String array[] = inputTesto.split(" ");
-
-		List<String> input = new LinkedList<>(Arrays.asList(array));
-		
-		List<RichWord> sbagliate= model.spellCheckText(input);
-		
-		for(RichWord r: sbagliate)
 		{
-			txtErrori.appendText(r.toString()+"\n");
-			
+			String array[] = inputTesto.split(" ");
+
+			List<String> input = new LinkedList<>(Arrays.asList(array));
+
+			List<RichWord> sbagliate = model.spellCheckText(input);
+
+			for (RichWord r : sbagliate) {
+				txtErrori.appendText(r.toString() + "\n");
+			}
+
+			this.txtContaErrori.setText("Il testo contiene "+model.getConta()+" errori");
+			this.txtTempo.setText("Controllo ortografico completato in "+model.getTempo()+" secondi");
 		}
+	
+		
 
 	}
 
@@ -87,6 +100,10 @@ public class FXMLController {
 
 	public void setModel(Dictionary model) {
 		this.bxSeleziona.getItems().addAll("English", "Italian"); // Popolo comboBox in setModel
+		this.bxSeleziona.setValue("English"); 
+		/*NO PROMPT, MA QUESTO, COSì SE L'UTENTE NON SELEZIONA, è SOTTOINTESO ENGLISH, INVECE
+		 CON IL PROMPT, SI VEDE DI DEFAULT ENGLISH, MA SE NON VIENE PREMUTO è NULL */
+	
 
 		this.model = model;
 	}

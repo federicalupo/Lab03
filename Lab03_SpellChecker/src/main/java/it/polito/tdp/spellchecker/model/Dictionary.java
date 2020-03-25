@@ -5,11 +5,15 @@ import java.io.*;
 
 public class Dictionary {
 
-	Set<String> dizionario; // LinkedHashSet ma non mi interessa ordinamento
-
+	private Set<String> dizionario; // LinkedHashSet ma non mi interessa ordinamento
+	private int conta;
+	private double tempo;
+	
 	public Dictionary() {
 		super();
 		this.dizionario = new HashSet<>();
+		conta=0;
+		
 
 	}
 
@@ -61,40 +65,47 @@ public class Dictionary {
 	
 	
 	public List<RichWord> spellCheckText(List<String> inputTextList){
+		
 		List<RichWord> errate = new LinkedList<>();
+		this.conta=0;
+		
+		double start= System.nanoTime();
 		
 		for(String s: inputTextList)
 		{
 	
 			
-			if(!this.dizionario.contains(s)) //contains dice se contiene! quindi equals???
+			if(!this.dizionario.contains(s)) 
 			{
 				RichWord temp= new RichWord(s); 
 				temp.setCorretta(false);
+				conta++;
 				
 				errate.add(temp);
 				
 				
 			}
 		}
-		
-		
 			
-			
+		double finish= System.nanoTime();
+		this.tempo= finish-start;
+		
 		return errate;
 		
 	}
 
-	/*
-	public boolean cerca(String cercare)
-	{
-		for(String s: this.dizionario)
-		{
-			if(s.equals(cercare))
-				return true;
-		}
+	public int getConta() {
+		return conta;
+	}
+	
+	
+
+	public double getTempo() {
 		
-		
-		return false;
-	}*/
+		return tempo/1e9; // diviso 10 alla 9
+	}
+	
+	
+
+	
 }
