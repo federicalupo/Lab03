@@ -64,7 +64,7 @@ public class FXMLController {
 		this.txtContaErrori.setText(""); //cosi se non viene inserito il testo, non ho gli errori del testo prima
 		this.txtTempo.setText("");
 		
-		String inputTesto = txtInserisci.getText().toLowerCase().replaceAll("[?.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]",""); // aggiungo ?
+		String inputTesto = txtInserisci.getText().toLowerCase().replaceAll("[?.,\\/#!$%\\^&\\*;:{}=\\-_`~()\\[\\]\"]",""); // aggiungo punto interrogativo
 		if (inputTesto.length() > 0) //evitare righe vuote
 
 		{
@@ -72,7 +72,9 @@ public class FXMLController {
 
 			List<String> input = new LinkedList<>(Arrays.asList(array));
 
-			List<RichWord> sbagliate = model.spellCheckText(input);
+			//List<RichWord> sbagliate = model.spellCheckText(input);
+			//List<RichWord> sbagliate = model.spellCheckTextLinear(input);
+			List<RichWord> sbagliate = model.spellCheckTextDichotomic(input);
 
 			for (RichWord r : sbagliate) {
 				txtErrori.appendText(r.toString() + "\n");

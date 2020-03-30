@@ -8,11 +8,17 @@ public class RichWord {
 	public RichWord(String parola) {
 		super();
 		this.parola= parola;
-		this.corretta=true;
+		this.corretta=false; //nell'es 2 parte da false
 	}
 
 	public void setCorretta(boolean corretta) {
 		this.corretta = corretta;
+	}
+
+	
+	
+	public boolean isCorretta() {
+		return corretta;
 	}
 
 	@Override
