@@ -29,7 +29,7 @@ public class Dictionary {
 				BufferedReader br = new BufferedReader(fr);
 
 				String word;
-				while ((word = br.readLine()) != null) {
+				while ((word = br.readLine()) != null) { //nella soluzione parole in minuscolo
 
 					this.dizionario.add(word); 
 
